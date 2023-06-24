@@ -1,0 +1,45 @@
+[Buildset]
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00"\x00T\x00e\x00s\x00l\x00a\x00I\x00n\x00f\x00o\x00t\x00a\x00i\x00n\x00m\x00e\x00n\x00t)
+
+[Launch]
+Launch Configurations=Launch Configuration 0
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=TeslaInfotainment
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=
+Debugger Shell=
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x02\x00\x00\x00"\x00T\x00e\x00s\x00l\x00a\x00I\x00n\x00f\x00o\x00t\x00a\x00i\x00n\x00m\x00e\x00n\x00t\x00\x00\x00"\x00T\x00e\x00s\x00l\x00a\x00I\x00n\x00f\x00o\x00t\x00a\x00i\x00n\x00m\x00e\x00n\x00t)
+Dependency Action=Build
+Display Demangle Names=true
+Display Static Members=true
+EnvironmentGroup=
+Executable=file:///home/phlagg/Projects/TeslaInfotainment
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+GDB Path=
+Kill Before Executing Again=65536
+Project Target=TeslaInfotainment,TeslaInfotainment
+Remote GDB Config Script=
+Remote GDB Run Script=
+Remote GDB Shell Script=
+Start With=GdbConsole
+Use External Terminal=false
+Working Directory=
+isExecutable=false
+
+[QMake_Builder]
+Build_Folder=/home/phlagg/Projects/TeslaInfotainment/build
+Build_Type=0
+Extra_Arguments=
+Install_Prefix=
+QMake_Binary=/usr/bin/qmake
+
+[QMake_Builder][/home/phlagg/Projects/TeslaInfotainment/build]
+Build_Type=0
+Extra_Arguments=
+Install_Prefix=
+QMake_Binary=/usr/bin/qmake
