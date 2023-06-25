@@ -1,0 +1,57 @@
+[Buildset]
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x004\x00T\x00e\x00s\x00l\x00a\x00-\x00I\x00n\x00f\x00o\x00t\x00a\x00i\x00n\x00m\x00e\x00n\x00t\x00-\x00R\x00e\x00p\x00l\x00i\x00c\x00a)
+
+[Launch]
+Launch Configurations=Launch Configuration 0
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=execute,debug
+Configured Launchers=nativeAppLauncher,gdb
+Name=TeslaInfotainment
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=
+Break on Start=false
+Debugger Shell=
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x02\x00\x00\x004\x00T\x00e\x00s\x00l\x00a\x00-\x00I\x00n\x00f\x00o\x00t\x00a\x00i\x00n\x00m\x00e\x00n\x00t\x00-\x00R\x00e\x00p\x00l\x00i\x00c\x00a\x00\x00\x00"\x00T\x00e\x00s\x00l\x00a\x00I\x00n\x00f\x00o\x00t\x00a\x00i\x00n\x00m\x00e\x00n\x00t)
+Dependency Action=Build
+Display Demangle Names=true
+Display Static Members=false
+EnvironmentGroup=
+Executable=file:///home/phlagg/Projects/Tesla-Infotainment-Replica
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+GDB Path=
+Kill Before Executing Again=65536
+LLDB Arguments=
+LLDB Config Script=
+LLDB Environment=
+LLDB Executable=
+LLDB Inherit System Env=true
+LLDB Remote Debugging=false
+LLDB Remote Path=
+LLDB Remote Server=
+Project Target=Tesla-Infotainment-Replica,TeslaInfotainment
+Remote GDB Config Script=
+Remote GDB Run Script=
+Remote GDB Shell Script=
+Start With=ApplicationOutput
+Use External Terminal=false
+Working Directory=
+isExecutable=false
+
+[Project]
+VersionControlSupport=kdevgit
+
+[QMake_Builder]
+Build_Folder=/home/phlagg/Projects/Tesla-Infotainment-Replica/build
+Build_Type=0
+Extra_Arguments=
+Install_Prefix=
+QMake_Binary=/usr/bin/qmake
+
+[QMake_Builder][/home/phlagg/Projects/Tesla-Infotainment-Replica/build]
+Build_Type=0
+Extra_Arguments=
+Install_Prefix=
+QMake_Binary=/usr/bin/qmake

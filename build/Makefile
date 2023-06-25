@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_LOCATION_LIB -DQT_POSITIONINGQUICK_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_LOCATION_LIB -DQT_POSITIONINGQUICK_LIB -DQT_QUICK_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_SQL_LIB -DQT_CONCURRENT_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../../TeslaInfotainment -I. -I/usr/include/qt -I/usr/include/qt/QtLocation -I/usr/include/qt/QtPositioningQuick -I/usr/include/qt/QtQuick -I/usr/include/qt/QtGui -I/usr/include/qt/QtQmlModels -I/usr/include/qt/QtQml -I/usr/include/qt/QtNetwork -I/usr/include/qt/QtPositioning -I/usr/include/qt/QtCore -I. -I/usr/lib/qt/mkspecs/linux-g++
+INCPATH       = -I../../Tesla-Infotainment-Replica -I. -I/usr/include/qt -I/usr/include/qt/QtLocation -I/usr/include/qt/QtPositioningQuick -I/usr/include/qt/QtQuick -I/usr/include/qt/QtOpenGL -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtQmlModels -I/usr/include/qt/QtQml -I/usr/include/qt/QtNetwork -I/usr/include/qt/QtPositioning -I/usr/include/qt/QtSql -I/usr/include/qt/QtConcurrent -I/usr/include/qt/QtCore -I. -I/usr/lib/qt/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -37,10 +37,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = TeslaInfotainment1.0.0
-DISTDIR = /home/phlagg/Projects/TeslaInfotainment/build/.tmp/TeslaInfotainment1.0.0
+DISTDIR = /home/phlagg/Projects/Tesla-Infotainment-Replica/build/.tmp/TeslaInfotainment1.0.0
 LINK          = g++
 LFLAGS        = -fPIC
-LIBS          = $(SUBLIBS) /usr/lib/libQt5Location.so /usr/lib/libQt5PositioningQuick.so /usr/lib/libQt5Quick.so /usr/lib/libQt5Gui.so /usr/lib/libQt5QmlModels.so /usr/lib/libQt5Qml.so /usr/lib/libQt5Network.so /usr/lib/libQt5Positioning.so /usr/lib/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) /usr/lib/libQt5Location.so /usr/lib/libQt5PositioningQuick.so /usr/lib/libQt5Quick.so /usr/lib/libQt5OpenGL.so /usr/lib/libQt5Widgets.so /usr/lib/libQt5Gui.so /usr/lib/libQt5QmlModels.so /usr/lib/libQt5Qml.so /usr/lib/libQt5Network.so /usr/lib/libQt5Positioning.so /usr/lib/libQt5Sql.so /usr/lib/libQt5Concurrent.so /usr/lib/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -404,6 +404,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/moc.prf \
 		/usr/lib/qt/mkspecs/features/link_ltcg.prf \
 		/usr/lib/qt/mkspecs/features/unix/opengl.prf \
+		/usr/lib/qt/mkspecs/features/uic.prf \
 		/usr/lib/qt/mkspecs/features/unix/thread.prf \
 		/usr/lib/qt/mkspecs/features/qmake_use.prf \
 		/usr/lib/qt/mkspecs/features/file_copies.prf \
@@ -765,6 +766,7 @@ Makefile: ../TeslaInfotainment.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr
 		/usr/lib/qt/mkspecs/features/moc.prf \
 		/usr/lib/qt/mkspecs/features/link_ltcg.prf \
 		/usr/lib/qt/mkspecs/features/unix/opengl.prf \
+		/usr/lib/qt/mkspecs/features/uic.prf \
 		/usr/lib/qt/mkspecs/features/unix/thread.prf \
 		/usr/lib/qt/mkspecs/features/qmake_use.prf \
 		/usr/lib/qt/mkspecs/features/file_copies.prf \
@@ -1112,6 +1114,7 @@ Makefile: ../TeslaInfotainment.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr
 /usr/lib/qt/mkspecs/features/moc.prf:
 /usr/lib/qt/mkspecs/features/link_ltcg.prf:
 /usr/lib/qt/mkspecs/features/unix/opengl.prf:
+/usr/lib/qt/mkspecs/features/uic.prf:
 /usr/lib/qt/mkspecs/features/unix/thread.prf:
 /usr/lib/qt/mkspecs/features/qmake_use.prf:
 /usr/lib/qt/mkspecs/features/file_copies.prf:
@@ -1181,8 +1184,10 @@ qrc_qml.cpp: ../qml.qrc \
 		../ui/assets/search.png \
 		../ui/assets/lock.png \
 		../ui/assets/vol0.png \
+		../ui/assets/compass.png \
 		../ui/assets/carRender.jpg \
 		../ui/assets/vol3.png \
+		../ui/assets/3D.png \
 		../ui/RightScreen/RightScreen.qml \
 		../ui/RightScreen/NavigationSearchBox.qml
 	/usr/bin/rcc -name qml ../qml.qrc -o qrc_qml.cpp
@@ -1199,22 +1204,24 @@ compiler_moc_header_clean:
 moc_audiocontroller.cpp: ../Controllers/audiocontroller.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include /home/phlagg/Projects/TeslaInfotainment/build/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/phlagg/Projects/TeslaInfotainment -I/usr/include/qt -I/usr/include/qt/QtLocation -I/usr/include/qt/QtPositioningQuick -I/usr/include/qt/QtQuick -I/usr/include/qt/QtGui -I/usr/include/qt/QtQmlModels -I/usr/include/qt/QtQml -I/usr/include/qt/QtNetwork -I/usr/include/qt/QtPositioning -I/usr/include/qt/QtCore -I. -I/usr/include/c++/13.1.1 -I/usr/include/c++/13.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include-fixed -I/usr/include ../Controllers/audiocontroller.h -o moc_audiocontroller.cpp
+	/usr/bin/moc $(DEFINES) --include /home/phlagg/Projects/Tesla-Infotainment-Replica/build/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/phlagg/Projects/Tesla-Infotainment-Replica -I/usr/include/qt -I/usr/include/qt/QtLocation -I/usr/include/qt/QtPositioningQuick -I/usr/include/qt/QtQuick -I/usr/include/qt/QtOpenGL -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtQmlModels -I/usr/include/qt/QtQml -I/usr/include/qt/QtNetwork -I/usr/include/qt/QtPositioning -I/usr/include/qt/QtSql -I/usr/include/qt/QtConcurrent -I/usr/include/qt/QtCore -I. -I/usr/include/c++/13.1.1 -I/usr/include/c++/13.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include-fixed -I/usr/include ../Controllers/audiocontroller.h -o moc_audiocontroller.cpp
 
 moc_hvachandler.cpp: ../Controllers/hvachandler.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include /home/phlagg/Projects/TeslaInfotainment/build/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/phlagg/Projects/TeslaInfotainment -I/usr/include/qt -I/usr/include/qt/QtLocation -I/usr/include/qt/QtPositioningQuick -I/usr/include/qt/QtQuick -I/usr/include/qt/QtGui -I/usr/include/qt/QtQmlModels -I/usr/include/qt/QtQml -I/usr/include/qt/QtNetwork -I/usr/include/qt/QtPositioning -I/usr/include/qt/QtCore -I. -I/usr/include/c++/13.1.1 -I/usr/include/c++/13.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include-fixed -I/usr/include ../Controllers/hvachandler.h -o moc_hvachandler.cpp
+	/usr/bin/moc $(DEFINES) --include /home/phlagg/Projects/Tesla-Infotainment-Replica/build/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/phlagg/Projects/Tesla-Infotainment-Replica -I/usr/include/qt -I/usr/include/qt/QtLocation -I/usr/include/qt/QtPositioningQuick -I/usr/include/qt/QtQuick -I/usr/include/qt/QtOpenGL -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtQmlModels -I/usr/include/qt/QtQml -I/usr/include/qt/QtNetwork -I/usr/include/qt/QtPositioning -I/usr/include/qt/QtSql -I/usr/include/qt/QtConcurrent -I/usr/include/qt/QtCore -I. -I/usr/include/c++/13.1.1 -I/usr/include/c++/13.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include-fixed -I/usr/include ../Controllers/hvachandler.h -o moc_hvachandler.cpp
 
 moc_system.cpp: ../Controllers/system.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include /home/phlagg/Projects/TeslaInfotainment/build/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/phlagg/Projects/TeslaInfotainment -I/usr/include/qt -I/usr/include/qt/QtLocation -I/usr/include/qt/QtPositioningQuick -I/usr/include/qt/QtQuick -I/usr/include/qt/QtGui -I/usr/include/qt/QtQmlModels -I/usr/include/qt/QtQml -I/usr/include/qt/QtNetwork -I/usr/include/qt/QtPositioning -I/usr/include/qt/QtCore -I. -I/usr/include/c++/13.1.1 -I/usr/include/c++/13.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include-fixed -I/usr/include ../Controllers/system.h -o moc_system.cpp
+	/usr/bin/moc $(DEFINES) --include /home/phlagg/Projects/Tesla-Infotainment-Replica/build/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/phlagg/Projects/Tesla-Infotainment-Replica -I/usr/include/qt -I/usr/include/qt/QtLocation -I/usr/include/qt/QtPositioningQuick -I/usr/include/qt/QtQuick -I/usr/include/qt/QtOpenGL -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtQmlModels -I/usr/include/qt/QtQml -I/usr/include/qt/QtNetwork -I/usr/include/qt/QtPositioning -I/usr/include/qt/QtSql -I/usr/include/qt/QtConcurrent -I/usr/include/qt/QtCore -I. -I/usr/include/c++/13.1.1 -I/usr/include/c++/13.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include-fixed -I/usr/include ../Controllers/system.h -o moc_system.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
+compiler_uic_make_all:
+compiler_uic_clean:
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:

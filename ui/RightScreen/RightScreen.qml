@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtLocation 5.15
 import QtPositioning 5.15
+import QtQuick.Controls 2.0 as C2
 
 Rectangle{
     id: rightScreen
@@ -13,18 +14,21 @@ Rectangle{
     width: parent.width *2/3
 
 /***************************************** BEGIN MAP ************************************************/
+    property string geoapifyHostingKey : "410c0770635d490b9a0133ad5f3a7356"
+    property string mapUrl3D: "https://maps.geoapify.com/v1/styles/osm-liberty/style.json?apiKey="
+    property string mapUrlDarkGrey: "https://maps.geoapify.com/v1/styles/dark-matter-dark-grey/style.json?apiKey="
+    property string mapUrlDarkBrown: "https://maps.geoapify.com/v1/styles/dark-matter-brown/style.json?apiKey="
+    property string mapUrlDarkPurple: "https://maps.geoapify.com/v1/styles/dark-matter-dark-purple/style.json?apiKey="
+    property string mapUrlDark: "https://maps.geoapify.com/v1/styles/dark-matter/style.json?apiKey="
+    property string mapUrlBright: "https://maps.geoapify.com/v1/styles/dark-matter/style.json?apiKey="
 
     Plugin {
         id: mapPlugin
         name: "mapboxgl"//"osm" "maplibregl", "esri", ...
-        PluginParameter {
-            name: "osm.mapping.custom.host"
-            value: "https://maps.geoapify.com/v1/tile/osm-carto/"
-        }
-        // PluginParameter {
-        //     name: "here.apiKey";
-        //     value: "{YOUR_API_KEY}"
-        // }
+//        PluginParameter {
+//            name: "mapboxgl.mapping.additional_style_urls"
+//            value: "https://maps.geoapify.com/v1/styles/osm-bright/style.json?apiKey=" + GeoapifyHostingKey
+//        }
      }
 
 
@@ -36,49 +40,34 @@ Rectangle{
         zoomLevel: 10
         // property geoCoordinate startCentroid
 //        activeMapType: supportedMapTypes[supportedMapTypes.length - 1] /* Used to set custom Map */
-/*
-        PinchHandler {
-            id: pinch
-            target: null
-            onActiveChanged: if (active) {
-                map.startCentroid = map.toCoordinate(pinch.centroid.position, false)
-            }
-            onScaleChanged: (delta) => {
-                map.zoomLevel += Math.log2(delta)
-                map.alignCoordinateToPoint(map.startCentroid, pinch.centroid.position)
-            }
-            onRotationChanged: (delta) => {
-                map.bearing -= delta
-                map.alignCoordinateToPoint(map.startCentroid, pinch.centroid.position)
-            }
-            grabPermissions: PointerHandler.TakeOverForbidden
+        DynamicParameter {
+            id: parameterD1
+            type: "layer"
+            property string name: "3d-buildings"
+            property string source: "composite"
+            property string sourceLayer: "building"
+            property string layerType: "fill-extrusion"
+            property real minzoom: 0.0
         }
-        WheelHandler {
-            id: wheel
-            // workaround for QTBUG-87646 / QTBUG-112394 / QTBUG-112432:
-            // Magic Mouse pretends to be a trackpad but doesn't work with PinchHandler
-            // and we don't yet distinguish mice and trackpads on Wayland either
-            acceptedDevices: Qt.platform.pluginName === "cocoa" || Qt.platform.pluginName === "wayland"
-                             ? PointerDevice.Mouse | PointerDevice.TouchPad
-                             : PointerDevice.Mouse
-            rotationScale: 1/120
-            property: "zoomLevel"
+
+        DynamicParameter {
+            id: parameterD2
+            type: "filter"
+
+            property string layer: "3d-buildings"
+            property var filter: [ "==", "extrude", "true" ]
         }
-        DragHandler {
-            id: drag
-            target: null
-            onTranslationChanged: (delta) => map.pan(-delta.x, -delta.y)
+
+        DynamicParameter {
+            id: parameterD3
+            type: "paint"
+
+            property string layer: "3d-buildings"
+            property string fillExtrusionColor: "#c0c0c0"
+            property real fillExtrusionOpacity: .6
+            property var fillExtrusionHeight: { return { type: "identity", property: "height" } }
+            property var fillExtrusionBase: { return { type: "identity", property: "min_height" } }
         }
-        Shortcut {
-            enabled: map.zoomLevel < map.maximumZoomLevel
-            sequence: StandardKey.ZoomIn
-            onActivated: map.zoomLevel = Math.round(map.zoomLevel + 1)
-        }
-        Shortcut {
-            enabled: map.zoomLevel > map.minimumZoomLevel
-            sequence: StandardKey.ZoomOut
-            onActivated: map.zoomLevel = Math.round(map.zoomLevel - 1)
-        }*/
     }
 
 /***************************************** END MAP ************************************************/
@@ -151,12 +140,120 @@ property string fontColor: "#4b4b4b"
             left: lockIcon.left
             top: lockIcon.bottom
             topMargin: 20
+        }
+    }
+
+    Image {
+        id: compassIcon
+        anchors {
+            top: navSearchBox.top
+            topMargin: 0
+            right: parent.right
+            rightMargin: 50
+
+        }
+        rotation: -1*map.bearing
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/ui/assets/compass.png"
+        width: parent.width /16
+        MouseArea {
+            anchors.fill: parent
+            onClicked: map.bearing = 0
+         }
+    }
+
+    Image {
+        id: isometricViewIcon
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/ui/assets/3D.png"
+        width: parent.width /12
+        anchors{
+            horizontalCenter: compassIcon.horizontalCenter
+            top: compassIcon.bottom
+            topMargin: 50
 
         }
 
+        MouseArea {
+            property int previousX: -1
+            property int previousY: -1
+            property bool rotating: false
+            anchors.fill: parent
+            onClicked: (map.tilt != 0 ? map.tilt =0 : map.tilt = 50)
+            pressAndHoldInterval: 400
+            onPressAndHold: {
+                previousX = mouseX;
+                previousY = mouseY;
+                rotating = true
+                console.log("Long");
+            }
+            onPositionChanged: {
+                if(rotating){
+                    let direction = Qt.vector2d(mouseX - previousX, mouseY - previousY).normalized();
+                    let normal = Qt.vector2d(direction.y, direction.x).normalized();
+                    console.log("direction : " + direction);
+                    console.log("normal : " + normal);
+                    map.tilt += normal.x *1.5 ;
+                    map.bearing += normal.y *1.5;
+                    // map.tilt += (mouse.x- previousX);
+                    // map.bearing += (mouse.x- previousX)*8;
+                    previousX = mouseX;
+                    previousY = mouseY
+                }
+            }
 
-
+            onReleased: {
+                previousX = -1;
+                previousY = -1;
+                rotating = false;
+                console.log("Long End");
+            }
+        }
     }
+
+
+
+
+
+
+//    C2.Slider {
+//        id: tiltSlider
+//        height: parent.height/3
+//        orientation : Qt.Vertical
+//        anchors {
+//            bottom: parent.bottom
+//            bottomMargin: 30
+//            right: parent.right
+//            rightMargin: 20
+//        }
+//        from: map.minimumTilt;
+//        to: map.maximumTilt
+//        value: map.tilt
+//        onValueChanged: {
+//            map.tilt = value;
+//        }
+//    }
+
+//        C2.Slider {
+//        id: bearingSlider
+//        height: parent.height/3
+//        orientation : Qt.Horizontal
+//        anchors {
+//            bottom: parent.bottom
+//            bottomMargin: 30
+//            right: parent.right
+//            rightMargin: 100
+//        }
+
+//        from: 0
+//        to: 360
+//        value: map.bearing
+//        onValueChanged: {
+//            map.bearing = value;
+//        }
+//    }
+
+
 
 
 }

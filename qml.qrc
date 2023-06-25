@@ -18,5 +18,7 @@
         <file>ui/assets/vol3.png</file>
         <file>ui/assets/volmute.png</file>
         <file>ui/BottomBar/VolumeControlComponent.qml</file>
+        <file>ui/assets/compass.png</file>
+        <file>ui/assets/3D.png</file>
     </qresource>
 </RCC>
