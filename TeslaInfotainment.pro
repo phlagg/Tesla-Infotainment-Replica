@@ -33,3 +33,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES +=
 
 
+# Workaround for QTBUG-38735
+QT_FOR_CONFIG += location-private
+qtConfig(geoservices_mapboxgl): QT += sql opengl
+qtConfig(geoservices_osm): QT += concurrent
+
+
+android: include(<path/to/android_openssl/openssl.pri)
+android: include(/home/phlagg/Android/Sdk/android_openssl/openssl.pri)
