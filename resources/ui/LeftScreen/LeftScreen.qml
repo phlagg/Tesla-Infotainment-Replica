@@ -1,10 +1,9 @@
 import QtQuick 2.15
 
-
-Rectangle{
+Rectangle {
     id: leftScreen
 
-    anchors{
+    anchors {
         top: parent.top
         bottom: bottomBar.top
         left: parent.left
@@ -18,8 +17,6 @@ Rectangle{
         anchors.centerIn: parent
         width: parent.width * 0.9
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/ui/assets/carRender.jpg"
+        source: "qrc:/resources/ui/assets/carRender.jpg"
     }
-
-
 }

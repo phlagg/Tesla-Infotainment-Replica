@@ -3,18 +3,18 @@ import QtLocation 5.15
 import QtPositioning 5.15
 import QtQuick.Controls 2.0 as C2
 
-Rectangle{
+Rectangle {
     id: rightScreen
-    anchors{
+    anchors {
         top: parent.top
         bottom: bottomBar.top
         right: parent.right
     }
 
-    width: parent.width *2/3
+    width: parent.width * 2 / 3
 
-/***************************************** BEGIN MAP ************************************************/
-    property string geoapifyHostingKey : "410c0770635d490b9a0133ad5f3a7356"
+    /***************************************** BEGIN MAP ************************************************/
+    property string geoapifyHostingKey: "410c0770635d490b9a0133ad5f3a7356"
     property string mapUrl3D: "https://maps.geoapify.com/v1/styles/osm-liberty/style.json?apiKey="
     property string mapUrlDarkGrey: "https://maps.geoapify.com/v1/styles/dark-matter-dark-grey/style.json?apiKey="
     property string mapUrlDarkBrown: "https://maps.geoapify.com/v1/styles/dark-matter-brown/style.json?apiKey="
@@ -25,12 +25,11 @@ Rectangle{
     Plugin {
         id: mapPlugin
         name: "osm"//"mapboxgl"// "maplibregl", "esri", ...
-//        PluginParameter {
-//            name: "mapboxgl.mapping.additional_style_urls"
-//            value: "https://maps.geoapify.com/v1/styles/osm-bright/style.json?apiKey=" + GeoapifyHostingKey
-//        }
-     }
-
+        //        PluginParameter {
+        //            name: "mapboxgl.mapping.additional_style_urls"
+        //            value: "https://maps.geoapify.com/v1/styles/osm-bright/style.json?apiKey=" + GeoapifyHostingKey
+        //        }
+    }
 
     Map {
         id: map
@@ -40,8 +39,8 @@ Rectangle{
         zoomLevel: 10
     }
 
-/***************************************** END MAP ************************************************/
-property string fontColor: "#4b4b4b"
+    /***************************************** END MAP ************************************************/
+    property string fontColor: "#4b4b4b"
 
     Image {
         id: lockIcon
@@ -50,12 +49,12 @@ property string fontColor: "#4b4b4b"
             top: parent.top
             margins: 20
         }
-        width: parent.width/40
+        width: parent.width / 40
         fillMode: Image.PreserveAspectFit
-        source: (systemHandler.carLocked ? "qrc:/ui/assets/lock.png" : "qrc:/ui/assets/unlock.png")
+        source: (systemHandler.carLocked ? "qrc:/resources/ui/assets/lock.png" : "qrc:/resources/ui/assets/unlock.png")
         MouseArea {
             anchors.fill: parent
-            onClicked: systemHandler.setCarLocked(!systemHandler.carLocked )
+            onClicked: systemHandler.setCarLocked(!systemHandler.carLocked)
         }
     }
 
@@ -65,7 +64,6 @@ property string fontColor: "#4b4b4b"
             left: lockIcon.right
             leftMargin: 40
             bottom: lockIcon.bottom
-
         }
         font.pixelSize: 16
         font.bold: true
@@ -79,7 +77,6 @@ property string fontColor: "#4b4b4b"
             left: dateTimeDisplay.right
             leftMargin: 40
             bottom: lockIcon.bottom
-
         }
         font.pixelSize: 16
         font.bold: true
@@ -93,7 +90,6 @@ property string fontColor: "#4b4b4b"
             left: outdoorTemperatureDisplay.right
             leftMargin: 40
             bottom: lockIcon.bottom
-
         }
         font.pixelSize: 16
         font.bold: true
@@ -104,7 +100,7 @@ property string fontColor: "#4b4b4b"
     NavigationSearchBox {
         id: navSearchBox
         width: parent.width / 3
-        height: parent.height /12
+        height: parent.height / 12
 
         anchors {
             left: lockIcon.left
@@ -120,28 +116,26 @@ property string fontColor: "#4b4b4b"
             topMargin: 0
             right: parent.right
             rightMargin: 50
-
         }
-        rotation: -1*map.bearing
+        rotation: -1 * map.bearing
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/ui/assets/compass.png"
-        width: parent.width /16
+        source: "qrc:/resources/ui/assets/compass.png"
+        width: parent.width / 16
         MouseArea {
             anchors.fill: parent
             onClicked: map.bearing = 0
-         }
+        }
     }
 
     Image {
         id: isometricViewIcon
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/ui/assets/3D.png"
-        width: parent.width /12
-        anchors{
+        source: "qrc:/resources/ui/assets/3D.png"
+        width: parent.width / 12
+        anchors {
             horizontalCenter: compassIcon.horizontalCenter
             top: compassIcon.bottom
             topMargin: 50
-
         }
 
         MouseArea {
@@ -149,26 +143,26 @@ property string fontColor: "#4b4b4b"
             property int previousY: -1
             property bool rotating: false
             anchors.fill: parent
-            onClicked: (map.tilt != 0 ? map.tilt =0 : map.tilt = 50)
+            onClicked: (map.tilt != 0 ? map.tilt = 0 : map.tilt = 50)
             pressAndHoldInterval: 400
             onPressAndHold: {
                 previousX = mouseX;
                 previousY = mouseY;
-                rotating = true
+                rotating = true;
                 console.log("Long");
             }
             onPositionChanged: {
-                if(rotating){
+                if (rotating) {
                     let direction = Qt.vector2d(mouseX - previousX, mouseY - previousY).normalized();
                     let normal = Qt.vector2d(direction.y, direction.x).normalized();
                     console.log("direction : " + direction);
                     console.log("normal : " + normal);
-                    map.tilt += normal.x *1.5 ;
-                    map.bearing += normal.y *1.5;
+                    map.tilt += normal.x * 1.5;
+                    map.bearing += normal.y * 1.5;
                     // map.tilt += (mouse.x- previousX);
                     // map.bearing += (mouse.x- previousX)*8;
                     previousX = mouseX;
-                    previousY = mouseY
+                    previousY = mouseY;
                 }
             }
 
@@ -181,49 +175,41 @@ property string fontColor: "#4b4b4b"
         }
     }
 
+    //    C2.Slider {
+    //        id: tiltSlider
+    //        height: parent.height/3
+    //        orientation : Qt.Vertical
+    //        anchors {
+    //            bottom: parent.bottom
+    //            bottomMargin: 30
+    //            right: parent.right
+    //            rightMargin: 20
+    //        }
+    //        from: map.minimumTilt;
+    //        to: map.maximumTilt
+    //        value: map.tilt
+    //        onValueChanged: {
+    //            map.tilt = value;
+    //        }
+    //    }
 
+    //        C2.Slider {
+    //        id: bearingSlider
+    //        height: parent.height/3
+    //        orientation : Qt.Horizontal
+    //        anchors {
+    //            bottom: parent.bottom
+    //            bottomMargin: 30
+    //            right: parent.right
+    //            rightMargin: 100
+    //        }
 
-
-
-
-//    C2.Slider {
-//        id: tiltSlider
-//        height: parent.height/3
-//        orientation : Qt.Vertical
-//        anchors {
-//            bottom: parent.bottom
-//            bottomMargin: 30
-//            right: parent.right
-//            rightMargin: 20
-//        }
-//        from: map.minimumTilt;
-//        to: map.maximumTilt
-//        value: map.tilt
-//        onValueChanged: {
-//            map.tilt = value;
-//        }
-//    }
-
-//        C2.Slider {
-//        id: bearingSlider
-//        height: parent.height/3
-//        orientation : Qt.Horizontal
-//        anchors {
-//            bottom: parent.bottom
-//            bottomMargin: 30
-//            right: parent.right
-//            rightMargin: 100
-//        }
-
-//        from: 0
-//        to: 360
-//        value: map.bearing
-//        onValueChanged: {
-//            map.bearing = value;
-//        }
-//    }
-
-
-
+    //        from: 0
+    //        to: 360
+    //        value: map.bearing
+    //        onValueChanged: {
+    //            map.bearing = value;
+    //        }
+    //    }
 
 }

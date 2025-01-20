@@ -10,10 +10,10 @@ find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Concurrent OpenGL Sql)
 qt_standard_project_setup()
 
 qt_add_executable(TeslaInfotainment WIN32 MACOSX_BUNDLE
-    controllers/audiocontroller.cpp controllers/audiocontroller.h
-    controllers/hvachandler.cpp controllers/hvachandler.h
-    controllers/system.cpp controllers/system.h
-    main.cpp
+    src/controllers/audiocontroller.cpp src/controllers/audiocontroller.h
+    src/controllers/hvachandler.cpp src/controllers/hvachandler.h
+    src/controllers/system.cpp src/controllers/system.h
+    src/main.cpp
 )
 target_link_libraries(TeslaInfotainment PRIVATE
     Qt::Core
@@ -26,29 +26,29 @@ target_link_libraries(TeslaInfotainment PRIVATE
 
 # Resources:
 set(qml_resource_files
-    "main.qml"
-    "ui/BottomBar/BottomBar.qml"
-    "ui/BottomBar/HVACComponent.qml"
-    "ui/BottomBar/VolumeControlComponent.qml"
-    "ui/LeftScreen/LeftScreen.qml"
-    "ui/RightScreen/NavigationSearchBox.qml"
-    "ui/RightScreen/RightScreen.qml"
-    "ui/assets/3D.png"
-    "ui/assets/carIcon.png"
-    "ui/assets/carIcon.svg"
-    "ui/assets/carRender.jpg"
-    "ui/assets/compass.png"
-    "ui/assets/lock.png"
-    "ui/assets/search.png"
-    "ui/assets/unlock.png"
-    "ui/assets/vol0.png"
-    "ui/assets/vol1.png"
-    "ui/assets/vol2.png"
-    "ui/assets/vol3.png"
-    "ui/assets/volmute.png"
+    "resources/main.qml"
+    "resources/ui/BottomBar/BottomBar.qml"
+    "resources/ui/BottomBar/HVACComponent.qml"
+    "resources/ui/BottomBar/VolumeControlComponent.qml"
+    "resources/ui/LeftScreen/LeftScreen.qml"
+    "resources/ui/RightScreen/NavigationSearchBox.qml"
+    "resources/ui/RightScreen/RightScreen.qml"
+    "resources/ui/assets/3D.png"
+    "resources/ui/assets/carIcon.png"
+    "resources/ui/assets/carIcon.svg"
+    "resources/ui/assets/carRender.jpg"
+    "resources/ui/assets/compass.png"
+    "resources/ui/assets/lock.png"
+    "resources/ui/assets/search.png"
+    "resources/ui/assets/unlock.png"
+    "resources/ui/assets/vol0.png"
+    "resources/ui/assets/vol1.png"
+    "resources/ui/assets/vol2.png"
+    "resources/ui/assets/vol3.png"
+    "resources/ui/assets/volmute.png"
 )
 
-qt_add_resources(TeslaInfotainment "qml"
+qt_add_resources(TeslaInfotainment "resources/qml"
     PREFIX
         "/"
     FILES
