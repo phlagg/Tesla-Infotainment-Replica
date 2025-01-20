@@ -8,19 +8,19 @@ Rectangle {
         bottom: parent.bottom
     }
     color: "black"
-    height: parent.height / 12
+    height: parent.height/12
 
     Image {
         id: carSettingsIcon
         anchors {
             left: parent.left
             leftMargin: 30
-            verticalCenter: parent.verticalCenter
+            verticalCenter:  parent.verticalCenter
         }
 
-        height: parent.height * .6
+        height: parent.height *.6
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/resources/ui/assets/carIcon.png"
+        source: "qrc:/ui/assets/carIcon.png"
     }
 
     HVACComponent {
@@ -52,6 +52,7 @@ Rectangle {
             rightMargin: 30
             top: parent.top
             bottom: parent.bottom
+
         }
     }
 }

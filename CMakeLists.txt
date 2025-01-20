@@ -4,7 +4,7 @@ project(TeslaInfotainment VERSION 1.0 LANGUAGES C CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Location Positioning Quick)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Location Positioning Quick Controls2)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Concurrent OpenGL Sql)
 
 qt_standard_project_setup()
@@ -21,6 +21,7 @@ target_link_libraries(TeslaInfotainment PRIVATE
     Qt::Location
     Qt::Positioning
     Qt::Quick
+    Qt::Controls2
 )
 
 
