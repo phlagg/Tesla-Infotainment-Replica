@@ -24,7 +24,7 @@ Rectangle{
 
     Plugin {
         id: mapPlugin
-        name: "mapboxgl"//"osm" "maplibregl", "esri", ...
+        name: "osm"//"mapboxgl"// "maplibregl", "esri", ...
 //        PluginParameter {
 //            name: "mapboxgl.mapping.additional_style_urls"
 //            value: "https://maps.geoapify.com/v1/styles/osm-bright/style.json?apiKey=" + GeoapifyHostingKey
@@ -38,36 +38,6 @@ Rectangle{
         plugin: mapPlugin
         center: QtPositioning.coordinate(49.2827, -123.12) // Oslo
         zoomLevel: 10
-        // property geoCoordinate startCentroid
-//        activeMapType: supportedMapTypes[supportedMapTypes.length - 1] /* Used to set custom Map */
-        DynamicParameter {
-            id: parameterD1
-            type: "layer"
-            property string name: "3d-buildings"
-            property string source: "composite"
-            property string sourceLayer: "building"
-            property string layerType: "fill-extrusion"
-            property real minzoom: 0.0
-        }
-
-        DynamicParameter {
-            id: parameterD2
-            type: "filter"
-
-            property string layer: "3d-buildings"
-            property var filter: [ "==", "extrude", "true" ]
-        }
-
-        DynamicParameter {
-            id: parameterD3
-            type: "paint"
-
-            property string layer: "3d-buildings"
-            property string fillExtrusionColor: "#c0c0c0"
-            property real fillExtrusionOpacity: .6
-            property var fillExtrusionHeight: { return { type: "identity", property: "height" } }
-            property var fillExtrusionBase: { return { type: "identity", property: "min_height" } }
-        }
     }
 
 /***************************************** END MAP ************************************************/
