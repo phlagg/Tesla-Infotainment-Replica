@@ -1,57 +1,22 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.15
-import QtQuick.Controls.Styles 1.4
 
-Item {
+Rectangle {
+    id: leftScreen
+
     anchors {
-        left: parent.left
         top: parent.top
-        bottom: parent.bottom
-    }
-    width: parent.width / 3
-    visible: true
-
-    property Component carInfo: CarInfo {}
-
-    StackView {
-        id: leftScreenStack
-        initialItem: teal
-        anchors.fill: parent
-        width: window.width / 2
-
-        delegate: StackViewDelegate {
-            function transitionFinished(properties) {
-                properties.exitItem.opacity = 1;
-            }
-
-            pushTransition: StackViewTransition {
-                PropertyAnimation {
-                    target: enterItem
-                    property: "x"
-                    from: 0
-                    to: target.width
-                    duration: 1000
-                }
-                PropertyAnimation {
-                    target: exitItem
-                    property: "x"
-                    from: target.width
-                    to: 0
-                }
-            }
-        }
+        bottom: bottomBar.top
+        left: parent.left
+        right: rightScreen.left
     }
 
-    Component {
-        id: teal
-        Rectangle {
-            color: 'teal'
-            anchors.fill: parent
-            implicitWidth: 200
-            implicitHeight: 200
-        }
-    }
+    color: "white"
 
-    LeftScreenViewController {}
+    Image {
+        id: carRender
+        anchors.centerIn: parent
+        width: parent.width * 0.9
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/resources/ui/assets/carRender.jpg"
+    }
 }

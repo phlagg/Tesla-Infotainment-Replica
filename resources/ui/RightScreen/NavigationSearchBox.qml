@@ -4,25 +4,24 @@ Rectangle {
     id: navSearchBox
     radius: 8
 
-    color:"#f0f0f0"
+    color: "#f0f0f0"
 
     Image {
         id: searchIcon
-        source: "qrc:/ui/assets/search.png"
+        source: "qrc:/resources/ui/assets/search.png"
 
         anchors {
             left: parent.left
             leftMargin: 25
             verticalCenter: parent.verticalCenter
-
         }
-            height: parent.height *0.4
-            fillMode: Image.PreserveAspectFit
+        height: parent.height * 0.4
+        fillMode: Image.PreserveAspectFit
     }
 
     Text {
         id: navigationPlaceholderText
-        visible: navigationTextInput.text ==""
+        visible: navigationTextInput.text == ""
         text: "Navigate"
         color: "#989898"
         font.bold: true
@@ -33,12 +32,11 @@ Rectangle {
             left: searchIcon.right
             leftMargin: 20
         }
-
     }
 
     TextInput {
         id: navigationTextInput
-        clip:true
+        clip: true
         anchors {
             top: parent.top
             bottom: parent.bottom
@@ -49,6 +47,4 @@ Rectangle {
         font.pixelSize: 18
         verticalAlignment: Text.AlignVCenter
     }
-
 }
-

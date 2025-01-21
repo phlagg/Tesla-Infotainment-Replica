@@ -2,15 +2,15 @@ import QtQuick 2.15
 
 Item {
     property string fontColor: "#4b4b4b"
-    width: 120 *( parent.width / 1280)
+    width: 120 * (parent.width / 1280)
 
     Connections {
         target: audioController
         function onVolumeLevelChanged() {
-            if(audioController.volumeLevel > 0){
-            visibleTimer.stop()
-            volumeIcon.visible = false
-            visibleTimer.start()
+            if (audioController.volumeLevel > 0) {
+                visibleTimer.stop();
+                volumeIcon.visible = false;
+                visibleTimer.start();
             }
         }
     }
@@ -20,18 +20,17 @@ Item {
         interval: 1500
         repeat: false
         onTriggered: {
-            volumeIcon.visible = true
+            volumeIcon.visible = true;
         }
     }
 
     Rectangle {
         id: decrementButton
-        anchors{
+        anchors {
             right: volumeIcon.left
             rightMargin: 15
             top: parent.top
             bottom: parent.bottom
-
         }
         width: height / 2
         color: "black"
@@ -46,7 +45,6 @@ Item {
             anchors.fill: parent
             onClicked: audioController.incrementVolume(-1)
         }
-
     }
 
     Image {
@@ -59,17 +57,16 @@ Item {
             verticalCenter: parent.verticalCenter
         }
         source: {
-            if(audioController.volumeLevel < 1)
-                return "qrc:/ui/assets/volmute.png"
-            if(audioController.volumeLevel >= 1 && audioController.volumeLevel < 3)
-                return "qrc:/ui/assets/vol0.png"
-            if(audioController.volumeLevel >= 3 && audioController.volumeLevel < 5)
-                return "qrc:/ui/assets/vol1.png"
-            if(audioController.volumeLevel >= 5 && audioController.volumeLevel < 8)
-                return "qrc:/ui/assets/vol2.png"
-            if(audioController.volumeLevel >= 8)
-                return "qrc:/ui/assets/vol3.png"
-
+            if (audioController.volumeLevel < 1)
+                return "qrc:/resources/ui/assets/volmute.png";
+            if (audioController.volumeLevel >= 1 && audioController.volumeLevel < 3)
+                return "qrc:/resources/ui/assets/vol0.png";
+            if (audioController.volumeLevel >= 3 && audioController.volumeLevel < 5)
+                return "qrc:/resources/ui/assets/vol1.png";
+            if (audioController.volumeLevel >= 5 && audioController.volumeLevel < 8)
+                return "qrc:/resources/ui/assets/vol2.png";
+            if (audioController.volumeLevel >= 8)
+                return "qrc:/resources/ui/assets/vol3.png";
         }
         MouseArea {
             anchors.fill: parent
@@ -86,16 +83,14 @@ Item {
         color: fontColor
         font.pixelSize: 30
         text: audioController.volumeLevel
-
     }
 
     Rectangle {
         id: incrementButton
-        anchors{
+        anchors {
             right: parent.right
             top: parent.top
             bottom: parent.bottom
-
         }
         width: height / 2
         color: "black"
@@ -110,8 +105,5 @@ Item {
             anchors.fill: parent
             onClicked: audioController.incrementVolume(1)
         }
-
     }
-
-
 }
